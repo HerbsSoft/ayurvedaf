@@ -1396,7 +1396,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-      const result = await response.json();
+      const text = await response.text();
+console.log("Server raw response:", text);
+
+let result;
+try {
+  result = JSON.parse(text);
+} catch (err) {
+  throw new Error("Invalid JSON response: " + text);
+}
 
       if (result.status === "success") {
         clearDraftLocally();
